@@ -57,6 +57,19 @@ class HorseRaces:
             inner keys are (str) races, inner values are (int) race times
             EXAMPLE: {'Special Week': {'Tenno Sho Fall': 16.5, 'Tenno Sho Spring': 16.3, 'Teio Sho': 17.0}}
         '''
+        headers = table[0]
+        race_dict = {}
+
+        for row in table[1:]:
+            horse_name = row[0]
+            race_dict[horse_name] = {}
+
+            for i in range(1, len(row)):
+                race_name = headers[i]
+                race_time = float(row[i])
+                race_dict[horse_name] [race_name] = race_time
+        return race_dict
+                
         pass
 
 ###############################################################################
@@ -75,6 +88,16 @@ class HorseRaces:
             tuple of fastest race name and the time
             EXAMPLE: ('Teio Sho', 14.8)
         '''
+    
+        if horse not in self.race_dict:
+            return (None, 999.9)
+
+        races = self.race_dict[horse]
+        fastest_race = min(races, key=races.get)
+        fastest_time = races[fastest_race]
+
+        return (fastest_race, fastest_time)
+
         pass
 
 ###############################################################################
@@ -89,6 +112,13 @@ class HorseRaces:
             A dictionary of tuples of each horse, with their fastest race and time.
             EXAMPLE: {"Oguri Cap": ("Tenno Sho Fall", 16.6), "Mejiro McQueen": ("Tenno Sho Fall", 16.1)}
         '''
+        best_dict = {}
+
+        for horse in self.race_dict:
+            best_dict[horse] = self.horse_fastest_race(horse)
+
+        return best_dict
+
         pass
 
 ###############################################################################
@@ -103,6 +133,14 @@ class HorseRaces:
             A dictionary with each horse and their average time.
             EXAMPLE: {'Gold Ship': 16.5, 'Daiwa Scarlet': 17.2}
         '''
+        avg_dict = {}
+
+        for horse, races in self.race_dict.items():
+            total = sum(races.values())
+            count = len(races)
+            avg_dict[horse] = total / count
+
+        return avg_dict
         pass
 
 ###############################################################################
