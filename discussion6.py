@@ -14,7 +14,7 @@ class HorseRaces:
         Returns:
             list of lists
         '''
-        #table = []
+        table = []
 
         # Do not modify this code
         # This opens the CSV and saves it as a list of lists
